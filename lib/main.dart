@@ -23,7 +23,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _controller =孩: TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   final GroqApiService _apiService = GroqApiService();
   List<String> _messages = [];
 
