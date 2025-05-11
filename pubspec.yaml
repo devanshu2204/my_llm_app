@@ -8,5 +8,9 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2
-  groq_sdk: ^0.0.5 # Check pub.dev for the latest version
+  groq_sdk: ^1.0.2
   flutter_dotenv: ^5.1.0
+
+flutter:
+  assets:
+    - .env

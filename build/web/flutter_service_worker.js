@@ -3,11 +3,11 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "0b0a3415aad49b6e9bf965ff578614f9",
-"assets/AssetManifest.bin.json": "a1fee2517bf598633e2f67fcf3e26c94",
-"assets/AssetManifest.json": "99914b932bd37a50b983c5e7c90ae93b",
+const RESOURCES = {"assets/AssetManifest.bin": "60a338ec88cb07292a1487b319a13b09",
+"assets/AssetManifest.bin.json": "06fac835e9a169e9ad42e79e951b5cec",
+"assets/AssetManifest.json": "16b49a9c02d3552cceeefadef0883e97",
 "assets/FontManifest.json": "d751713988987e9331980363e24189ce",
-"assets/NOTICES": "96c06ff9dcaf01f289a0ccbb26a80078",
+"assets/NOTICES": "84790af53f0e009528343470ab0b8bd2",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "canvaskit/canvaskit.js": "86e461cf471c1640fd2b461ece4589df",
 "canvaskit/canvaskit.js.symbols": "68eb703b9a609baef8ee0e413b442f33",
@@ -23,14 +23,14 @@ const RESOURCES = {"assets/AssetManifest.bin": "0b0a3415aad49b6e9bf965ff578614f9
 "canvaskit/skwasm_st.wasm": "56c3973560dfcbf28ce47cebe40f3206",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "flutter.js": "76f08d47ff9f5715220992f993002504",
-"flutter_bootstrap.js": "31b6c0a130701d8182fa5ce53ffc5913",
+"flutter_bootstrap.js": "2c7a2792cfbc0183e16b1f013f651f95",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "49756ef968aa7c28e0e35c9920bb7477",
-"/": "49756ef968aa7c28e0e35c9920bb7477",
-"main.dart.js": "d3c3a9018550e8370dc2cee2bb8ca6be",
+"index.html": "8e366e42bfa2290750477dce4ca4b5bc",
+"/": "8e366e42bfa2290750477dce4ca4b5bc",
+"main.dart.js": "0d5a59e79606f211afac9c56e5f71bde",
 "manifest.json": "6a0f49ab6aa3c4e64e60240172655aa4",
 "version.json": "d8b050e61c135bdff0963d8bd76e3c9c"};
 // The application shell files that are downloaded before a service worker can

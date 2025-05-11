@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http; // If using http package
-import 'dart:convert';
+import 'groq_api_service.dart';
+import 'chat_bubble.dart';
+
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
@@ -12,6 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'LLM Chat',
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: ChatScreen(),
     );
   }
@@ -26,18 +30,21 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final GroqApiService _apiService = GroqApiService();
   List<String> _messages = [];
+  bool _isLoading = false;
 
   void _sendMessage() async {
-    final input = _controller.text;
+    final input = _controller.text.trim();
     if (input.isEmpty) return;
 
     setState(() {
       _messages.add("You: $input");
+      _isLoading = true;
     });
 
     final response = await _apiService.getResponse(input);
     setState(() {
       _messages.add("AI: $response");
+      _isLoading = false;
     });
 
     _controller.clear();
@@ -52,11 +59,20 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(_messages[index]),
-              ),
+              itemBuilder: (context, index) {
+                final text = _messages[index];
+                final isUser = text.startsWith("You:");
+                final cleanText = text.replaceFirst(RegExp(r'^(You|AI):\s*'), '');
+                return ChatBubble(message: cleanText, isUser: isUser);
+               },
             ),
           ),
+
+          if (_isLoading)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: LinearProgressIndicator(),
+            ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Row(
@@ -69,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
+                  onPressed: _isLoading ? null : _sendMessage,
                 ),
               ],
             ),
@@ -77,33 +93,5 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
-  }
-}
-
-class GroqApiService {
-  final String apiKey = dotenv.env['GROQ_API_KEY']!;
-  final String baseUrl = 'https://api.groq.com/openai/v1/chat/completions';
-
-  Future<String> getResponse(String userInput) async {
-    final response = await http.post(
-      Uri.parse(baseUrl),
-      headers: {
-        'Authorization': 'Bearer $apiKey',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'model': 'llama3-8b-8192',
-        'messages': [
-          {'role': 'user', 'content': userInput}
-        ],
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data['choices'][0]['message']['content'];
-    } else {
-      return 'Error: ${response.statusCode}';
-    }
   }
 }

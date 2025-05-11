@@ -42,10 +42,10 @@ packages:
     dependency: "direct main"
     description:
       name: groq_sdk
-      sha256: be7f71817a3588834fae1f63ac0dafad32035dbbb5e02ee26e1e2963c7a65a66
+      sha256: "7c0e170d367d321ac24f81ea44789ca0752d6fdcc1003c82c29922ea9bf5f40b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.8"
+    version: "1.0.2"
   http:
     dependency: "direct main"
     description:
