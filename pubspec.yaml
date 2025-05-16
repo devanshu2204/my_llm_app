@@ -13,7 +13,7 @@ dependencies:
   intl: ^0.18.0
 
 flutter:
-fonts:
+  fonts:
     - family: NotoSans
       fonts:
         - asset: assets/fonts/NotoSans-Regular.ttf
