@@ -1,80 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http; // If using http package
-import 'dart:convert';
+import 'chat_screen.dart';
 
-void main() async {
-  await dotenv.load(fileName: ".env");
-  runApp(MyApp());
+void main() {
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isDarkMode = false;
+
+  void _toggleDarkMode(bool value) {
+    setState(() {
+      _isDarkMode = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ChatScreen(),
-    );
-  }
-}
-
-class ChatScreen extends StatefulWidget {
-  @override
-  _ChatScreenState createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _controller = TextEditingController();
-  final GroqApiService _apiService = GroqApiService();
-  List<String> _messages = [];
-
-  void _sendMessage() async {
-    final input = _controller.text;
-    if (input.isEmpty) return;
-
-    setState(() {
-      _messages.add("You: $input");
-    });
-
-    final response = await _apiService.getResponse(input);
-    setState(() {
-      _messages.add("AI: $response");
-    });
-
-    _controller.clear();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("LLM Chat")),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: _messages.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(_messages[index]),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(hintText: "Type a message"),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
-                ),
-              ],
-            ),
-          ),
-        ],
+      title: 'LLM Chat',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: const Color(0xFF1E88E5),
+        scaffoldBackgroundColor: const Color(0xFFF5F7FA),
+        cardColor: Colors.white,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Color(0xFF1A2530)),
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blue,
+          brightness: Brightness.light,
+        ).copyWith(
+          background: const Color(0xFFF5F7FA),
+          onSurface: Colors.black87,
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFF40C4FF),
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        cardColor: const Color(0xFF1E1E1E),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Colors.white),
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.blue,
+          brightness: Brightness.dark,
+        ).copyWith(
+          background: const Color(0xFF121212),
+          onSurface: Colors.white70,
+        ),
+      ),
+      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      home: ChatScreen(
+        onToggleDarkMode: _toggleDarkMode,
+        isDarkMode: _isDarkMode,
       ),
     );
   }
