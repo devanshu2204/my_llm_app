@@ -1,23 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GroqApiService {
-  final String _apiKey;
-
-  GroqApiService() : _apiKey = dotenv.env['GROQ_API_KEY'] ?? 'missing_key';
-
   Future<String> getResponse(String userInput) async {
-    if (_apiKey == 'missing_key') {
-      return 'Error: Groq API key is missing';
-    }
-
-    final url = Uri.parse('https://api.groq.com/openai/v1/chat/completions');
-
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $_apiKey',
-    };
+    const backendUrl = 'https://my-llm-app.vercel.app/api/groq';
+    final url = Uri.parse(backendUrl);
+    final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       "model": "llama3-8b-8192",
       "messages": [

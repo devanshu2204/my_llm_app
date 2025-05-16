@@ -23,7 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<MessageModel> _messages = [
     MessageModel(
       id: '1',
-      text: "Hi there! I'm llm chatbot, created by xAI. How can I help you today?",
+      text: "Hi there! I'm Grok, created by xAI. How can I help you today?",
       isUser: false,
       timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
     ),
@@ -65,6 +65,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
     final response = await _apiService.getResponse(text);
 
+    if (response.startsWith('API Error:') || response.startsWith('Network Error:')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response),
+          backgroundColor: Colors.red,
+        ),
+      );
+      setState(() {
+        _isTyping = false;
+      });
+      return;
+    }
+
     final botMessage = MessageModel(
       id: (DateTime.now().millisecondsSinceEpoch + 1).toString(),
       text: response,
@@ -87,7 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             ChatHeader(
-              botName: 'Groq llm',
+              botName: 'Grok',
               isDarkMode: widget.isDarkMode,
               onToggleDarkMode: widget.onToggleDarkMode,
               onBackClick: () {
