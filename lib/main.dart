@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'chat_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+void main() {
   runApp(const MyApp());
 }
 
@@ -41,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.light,
         ).copyWith(
           background: const Color(0xFFF5F7FA),
-          onSurface: Colors.black87, // Ensure visibility in light mode
+          onSurface: Colors.black87,
         ),
       ),
       darkTheme: ThemeData(
@@ -57,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.dark,
         ).copyWith(
           background: const Color(0xFF121212),
-          onSurface: Colors.white70, // Ensure visibility in dark mode
+          onSurface: Colors.white70,
         ),
       ),
       themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
